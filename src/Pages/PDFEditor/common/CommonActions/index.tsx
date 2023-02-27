@@ -6,10 +6,10 @@ interface ICommonAction {
   onClick?: () => void;
   children: any;
   active?: boolean;
-  element?: any;
-  onDragMoveElementInSideEditor?: any;
-  onDragOver?: any;
   index?: any;
+  handleDrop?: any;
+  handleDragStart?: any;
+  handleDragOver?: any;
 }
 
 const CommonActions = ({
@@ -17,31 +17,19 @@ const CommonActions = ({
   deleteItem,
   children,
   active,
-  element,
-  onDragMoveElementInSideEditor,
-  onDragOver,
   index,
+  handleDragStart,
+  handleDragOver,
+  handleDrop,
 }: ICommonAction) => {
   return (
     <ActionContainerWrapper
       active={active}
       onClick={onClick}
       draggable
-      onDragStart={onClick}
-      onDragOver={(event: DragEvent) => {
-        event.stopPropagation();
-        event.preventDefault();
-        if (active !== true) {
-          console.log(index, active);
-          onDragOver(index);
-        }
-      }}
-      onDrop={(event: DragEvent) => {
-        event.stopPropagation();
-        event.preventDefault();
-        console.log("lol");
-        onDragMoveElementInSideEditor(event, element);
-      }}
+      onDragStart={(event: DragEvent) => handleDragStart(event, index)}
+      onDragOver={(event: DragEvent) => handleDragOver(event)}
+      onDrop={(event: DragEvent) => handleDrop(event, index)}
     >
       <ActionContainer>
         <Action onClick={deleteItem}>D</Action>

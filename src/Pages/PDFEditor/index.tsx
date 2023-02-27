@@ -19,7 +19,6 @@ const Pdfeditor = () => {
     []
   );
   const [activeElement, setActiveElement] = useState(0);
-  const [hoveredElementInEditor, setHoveredElementInEditor] = useState(-1);
 
   const onDragStartElement = (event: any) => {
     const dataToSend = event.currentTarget.getAttribute("data");
@@ -93,19 +92,22 @@ const Pdfeditor = () => {
     setActiveElement(e);
   };
 
-  const onDragMoveElementInSideEditor = (e: DragEvent, element: any) => {
-    console.log(hoveredElementInEditor);
-    const newRearrangedArray = [...droppedElementList];
-    if (hoveredElementInEditor > -1) {
-      console.log("inside");
-      newRearrangedArray.splice(hoveredElementInEditor, 0, JSON.parse(element));
-      console.log("new rearragenge", newRearrangedArray);
+  function handleDragStart(event: DragEvent, index: any) {
+    event.dataTransfer.setData("text/plain", index);
+    setActiveElement(index);
+  }
 
-      deleteItem(activeElement);
-    }
+  function handleDragOver(event: DragEvent) {
+    event.preventDefault();
+  }
 
-    setDroppedElementList(() => newRearrangedArray);
-  };
+  function handleDrop(event: DragEvent, index: any) {
+    event.stopPropagation();
+    const itemIndex = event.dataTransfer.getData("text/plain");
+    const newItems: any = [...droppedElementList];
+    newItems.splice(index, 0, newItems.splice(itemIndex, 1)[0]);
+    setDroppedElementList(() => newItems);
+  }
 
   return (
     <PdfeditorContainer>
@@ -141,9 +143,9 @@ const Pdfeditor = () => {
               active={activeElement === index}
               key={index}
               index={index}
-              element={JSON.stringify(element)}
-              onDragMoveElementInSideEditor={onDragMoveElementInSideEditor}
-              onDragOver={setHoveredElementInEditor}
+              handleDragStart={handleDragStart}
+              handleDragOver={handleDragOver}
+              handleDrop={handleDrop}
             >
               <Component styles={element.attributes} value={element.value} />
             </CommonActions>
