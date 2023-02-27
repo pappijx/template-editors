@@ -60,22 +60,13 @@ const defaultCategories: ExtensionProps["categories"] = [
         title: "4 columns",
         payload: [["25%", "25%", "25%", "25%"]],
       },
-      {
-        title: "8 columns",
-        payload: [
-          [
-            "12.5%",
-            "12.5%",
-            "12.5%",
-            "12.5%",
-            "12.5%",
-            "12.5%",
-            "12.5%",
-            "12.5%",
-          ],
-        ],
-      },
     ],
+  },
+  {
+    label: "Custom",
+    active: true,
+    displayType: "custom",
+    blocks: [],
   },
 ];
 

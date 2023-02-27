@@ -1,12 +1,7 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Pdfeditor from "./Pages/PDFEditor";
+import AppRoutes from "./AppRoutes";
 function App() {
-  return (
-    <Routes>
-      <Route path="/pdfeditor" element={<Pdfeditor />} />
-    </Routes>
-  );
+  return <AppRoutes />;
 }
 
 export default App;

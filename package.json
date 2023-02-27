@@ -8,19 +8,32 @@
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
+  "resolutions": {
+    "styled-components": "^5"
+  },
   "dependencies": {
     "@arco-themes/react-easy-email-theme": "^0.0.3",
     "easy-email-core": "^4.7.0",
     "easy-email-editor": "^4.7.0",
     "easy-email-extensions": "^4.7.2",
+    "json2mjml": "^1.0.3",
+    "lodash": "^4.17.21",
+    "mjml-browser": "^4.13.0",
+    "mjml-core": "^4.13.0",
+    "mjml-react": "^2.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-final-form": "^6.5.9",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "styled-components": "^5.3.6"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "@types/mjml-core": "^4.7.1",
+    "@types/mjml-react": "^2.0.6",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react": "^3.1.0",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
