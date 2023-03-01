@@ -1,9 +1,9 @@
-import { useState } from "react";
-import PropertyPanel from "../common/PropertyPanel";
+import { IElementsHTML } from "../Elements";
 
-const Image = ({ styles, value }: any) => {
+const Image = ({ element }: { element: IElementsHTML }) => {
+  const { attributes, value, children } = element
   return (
-    <div style={{ display: "flex", ...styles }}>
+    <div style={{ display: "flex", ...attributes }}>
       <img
         src={value ? value : "https://via.placeholder.com/150"}
         alt=""

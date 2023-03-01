@@ -12,6 +12,7 @@ import { Mjml, MjmlBody, MjmlHead, MjmlTitle, MjmlTable } from "mjml-react";
 import CommonActions from "./common/CommonActions";
 import PropertyPanel from "./common/PropertyPanel";
 import { PropertyPanelELementBased } from "./common/PropertyPanel/PropertyPanelELementBased";
+import Wrapper from "./Components/Wrapper";
 
 const Pdfeditor = () => {
   const canvasRef = useRef<HTMLHtmlElement>(null);
@@ -55,11 +56,10 @@ const Pdfeditor = () => {
   const addedElementList: any = {
     text: TextEditor,
     image: Image,
+    wrapper: Wrapper
   };
 
   const deleteItem = (itemIndexInDroppedElementList: number) => {
-    console.log(itemIndexInDroppedElementList);
-
     const arrayAfterElementDelete = [...droppedElementList];
     arrayAfterElementDelete.splice(itemIndexInDroppedElementList, 1);
     setDroppedElementList(arrayAfterElementDelete);
@@ -79,6 +79,23 @@ const Pdfeditor = () => {
         newArrayWithPropetyForActiveElement[activeElement] = {
           ...newArrayWithPropetyForActiveElement[activeElement],
           value: e.target.value,
+        };
+        setDroppedElementList(() => newArrayWithPropetyForActiveElement);
+        break;
+      case "number_of_columns":
+        newArrayWithPropetyForActiveElement[activeElement] = {
+          ...newArrayWithPropetyForActiveElement[activeElement],
+          value: e.target.value,
+        };
+        setDroppedElementList(() => newArrayWithPropetyForActiveElement);
+        break;
+      case "gap_in_column":
+        newArrayWithPropetyForActiveElement[activeElement] = {
+          ...newArrayWithPropetyForActiveElement[activeElement],
+          attributes: {
+            ...newArrayWithPropetyForActiveElement[activeElement].attributes,
+            gap: e.target.value
+          },
         };
         setDroppedElementList(() => newArrayWithPropetyForActiveElement);
         break;
@@ -103,10 +120,36 @@ const Pdfeditor = () => {
 
   function handleDrop(event: DragEvent, index: any) {
     event.stopPropagation();
-    const itemIndex = event.dataTransfer.getData("text/plain");
-    const newItems: any = [...droppedElementList];
-    newItems.splice(index, 0, newItems.splice(itemIndex, 1)[0]);
-    setDroppedElementList(() => newItems);
+    if (droppedElementList[index].element_id !== 'wrapper') {
+      console.log(event.dataTransfer);
+      const itemIndex = event.dataTransfer.getData("text/plain");
+      const newItems: any = [...droppedElementList];
+      newItems.splice(index, 0, newItems.splice(itemIndex, 1)[0]);
+      setDroppedElementList(() => newItems);
+    }
+  }
+
+  function handleWrapperDragOver(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  function handleWrapperDrop(event: DragEvent, index: any) {
+    event.stopPropagation();
+    console.log('hello');
+    const dataRecievedAfterDrop: any = JSON.parse(
+      event.dataTransfer.getData("application/json")
+    );
+
+    const newArray = [...droppedElementList]
+    newArray[index].children?.push(dataRecievedAfterDrop)
+
+    setDroppedElementList(() => newArray);
+  }
+
+  const updateEditor = (newEditorStateArray: any, index: number) => {
+    const newUpdatedEditorState = [...droppedElementList]
+    newUpdatedEditorState[index].children = newEditorStateArray
+    setDroppedElementList(() => newUpdatedEditorState)
   }
 
   return (
@@ -147,18 +190,19 @@ const Pdfeditor = () => {
               handleDragOver={handleDragOver}
               handleDrop={handleDrop}
             >
-              <Component styles={element.attributes} value={element.value} />
+              <Component element={element}
+                handleWrapperDrop={handleWrapperDrop} handleWrapperDragOver={(event: DragEvent) => handleWrapperDragOver(event)} index={index} updateEditor={updateEditor} />
             </CommonActions>
           );
         })}
       </EditorContainer>
-      <PropertyPanel>
+      {droppedElementList[activeElement]?.element_id !== 'wrapper' && <PropertyPanel>
         <PropertyPanelELementBased
           paneltype={droppedElementList[activeElement]?.element_id}
           elementProperties={droppedElementList[activeElement]}
           onChange={onChange}
         />
-      </PropertyPanel>
+      </PropertyPanel>}
     </PdfeditorContainer>
   );
 };

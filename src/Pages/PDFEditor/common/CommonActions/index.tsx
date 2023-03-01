@@ -10,6 +10,7 @@ interface ICommonAction {
   handleDrop?: any;
   handleDragStart?: any;
   handleDragOver?: any;
+  handleWrapperDrop?: any
 }
 
 const CommonActions = ({

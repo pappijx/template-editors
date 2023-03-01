@@ -1,8 +1,8 @@
 export interface IElementsHTML {
   element_id: string;
   tagName: string;
-  attributes?: object;
-  children?: any[];
+  attributes?: any;
+  children?: IElementsHTML[];
   value?: string;
 }
 
@@ -22,6 +22,17 @@ export const ElementsHTML: IElementsHTML[] = [
     attributes: {
       color: "blue",
       backgroundColor: "red",
+    },
+    value: "",
+    children: [],
+  },
+  {
+    element_id: "wrapper",
+    tagName: "Wrapper",
+    attributes: {
+      color: "blue",
+      backgroundColor: "red",
+      gap: "0.5rem",
     },
     value: "",
     children: [],
