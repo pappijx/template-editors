@@ -121,7 +121,6 @@ const Pdfeditor = () => {
   function handleDrop(event: DragEvent, index: any) {
     event.stopPropagation();
     if (droppedElementList[index].element_id !== 'wrapper') {
-      console.log(event.dataTransfer);
       const itemIndex = event.dataTransfer.getData("text/plain");
       const newItems: any = [...droppedElementList];
       newItems.splice(index, 0, newItems.splice(itemIndex, 1)[0]);
@@ -191,7 +190,10 @@ const Pdfeditor = () => {
               handleDrop={handleDrop}
             >
               <Component element={element}
-                handleWrapperDrop={handleWrapperDrop} handleWrapperDragOver={(event: DragEvent) => handleWrapperDragOver(event)} index={index} updateEditor={updateEditor} />
+                handleWrapperDrop={handleWrapperDrop}
+                handleWrapperDragOver={(event: DragEvent) => handleWrapperDragOver(event)}
+                index={index}
+                updateEditor={updateEditor} />
             </CommonActions>
           );
         })}

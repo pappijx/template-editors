@@ -12,6 +12,7 @@ interface IWrapper { element: IElementsHTML, handleWrapperDrop?: any, handleWrap
 
 const WrapperContainer: any = styled.div`
     display: flex;
+    flex-direction: column;
     gap: ${(props: any) => props.gap};
 `
 

@@ -32,6 +32,7 @@ const MainPage = ({ setEditorState, currentEditorState }: IMainPage) => {
   const mainPageDragOver = (event: DragEvent) => {
     event.preventDefault();
   };
+
   const mainPageDrop = (event: DragEvent) => {
     const recievedData =
       event.dataTransfer?.getData("application/json") &&
@@ -43,11 +44,12 @@ const MainPage = ({ setEditorState, currentEditorState }: IMainPage) => {
       draggable={true}
       onDragOver={(event: any) => mainPageDragOver(event)}
       onDrop={(event: any) => mainPageDrop(event)}
+      style={{ height: '100vh', width: '100%' }}
     >
       {mainPageElementList.length &&
         mainPageElementList.map((element: IElementsHTML, index: number) => {
           const Component = element.type && displayElementList[element.type];
-          return <Component key={index} />;
+          return <Component key={index} element={element} />;
         })}
     </div>
   );

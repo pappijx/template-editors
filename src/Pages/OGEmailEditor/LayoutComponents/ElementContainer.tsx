@@ -6,6 +6,8 @@ const BlockElementList: any = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  height: 100%;
+  background-color: #dcdcdc;
 `;
 
 const BlockElememtsTiles: any = styled.div`
@@ -45,7 +47,7 @@ const ElementContainer = () => {
     const dataToSend = event.currentTarget?.getAttribute("data-element");
     event.dataTransfer?.setData("application/json", dataToSend);
   };
-  const onDragEndElement = (event: DragEvent) => {};
+  const onDragEndElement = (event: DragEvent) => { };
   return (
     <BlockElementList>
       {componentList.map((element, index) => (

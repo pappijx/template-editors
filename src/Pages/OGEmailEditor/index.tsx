@@ -7,6 +7,7 @@ import { IElementsHTML } from "./Models/element";
 
 const EditorContainer = styled.div`
   display: flex;
+  height: 100vh;
 `;
 
 const OGEmailEditor = () => {
@@ -20,7 +21,6 @@ const OGEmailEditor = () => {
       },
     },
   });
-  console.log(editorState);
 
   return (
     <EditorContainer>
